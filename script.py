@@ -3,25 +3,35 @@ import matplotlib # For: plotting
 matplotlib.use("Agg") # For: showing figures
 from matplotlib import pyplot as plt
 
-filename = sys.argv[1]
-description = sys.argv[2]
+# get the filenames and descriptions for comparison
+num_files = (len(sys.argv) - 1)/2
+
+filenames = []
+descriptions = []
+for i in range(0, num_files + 1, 2):
+    filenames.append(sys.argv[i + 1])
+    descriptions.append(sys.argv[i + 2])
 
 my_dict = dict()
-with open(filename, 'r') as f:
-    size = []
-    Mflops = []
-    percentage = []
+for index, filename in enumerate(filenames):
+    print(index, filename)
+    with open(filename, 'r') as f:
+        size = []
+	Mflops = []
+	percentage = []
+        description = descriptions[index]
     
-    my_dict[description] = {}
-    for line in f:
-	data = line.split('\t')
-	try:
-	    size.append(data[0].split(':')[1].strip())
-	    Mflops.append(data[1].split(':')[1].strip())
-	    percentage.append(data[2].split(':')[1].strip())
-	# the last line of the file will not have two entires, so except it
-	except IndexError:
-	    pass
+        my_dict[description] = {}
+        for line in f:
+	    data = line.split('\t')
+	    
+            try:
+	        size.append(data[0].split(':')[1].strip())
+	        Mflops.append(data[1].split(':')[1].strip())
+	        percentage.append(data[2].split(':')[1].strip())
+	    # the last line of the file will not have two entires, so except it
+	    except IndexError:
+	        pass
     my_dict[description] = {'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}
     #my_dict = {description:{'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}}
 print(my_dict)
