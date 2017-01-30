@@ -14,7 +14,6 @@ for i in range(0, num_files + 1, 2):
 
 my_dict = dict()
 for index, filename in enumerate(filenames):
-    print(index, filename)
     with open(filename, 'r') as f:
         size = []
 	Mflops = []
@@ -32,11 +31,12 @@ for index, filename in enumerate(filenames):
 	    # the last line of the file will not have two entires, so except it
 	    except IndexError:
 	        pass
+    
     my_dict[description] = {'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}
-    #my_dict = {description:{'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}}
 print(my_dict)
-plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'])
-plt.ylabel('Mflop/s')
-plt.xlabel('Size')
-plt.legend(description)
+
+for description in descriptions:
+    plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'])
+    plt.ylabel('Mflop/s')
+    plt.xlabel('Size')
 plt.savefig(description + '.png')
