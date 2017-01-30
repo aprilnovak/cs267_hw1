@@ -1,4 +1,7 @@
-import sys
+import sys # For: command line arguments
+import matplotlib # For: plotting
+matplotlib.use("Agg") # For: showing figures
+from matplotlib import pyplot as plt
 
 filename = sys.argv[1]
 description = sys.argv[2]
@@ -22,3 +25,8 @@ with open(filename, 'r') as f:
     my_dict['size'] = size[1:]
     my_dict['Mflops'] = Mflops
     my_dict['percentage'] = percentage
+
+plt.plot(my_dict['size'], my_dict['Mflops'])
+plt.ylabel('Mflop/s')
+plt.xlabel('Size')
+plt.savefig(description + '.png')
