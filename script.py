@@ -10,7 +10,6 @@ with open(filename, 'r') as f:
     size = []
     Mflops = []
     percentage = []
-    my_dict = {'description': description}
 
     for line in f:
 	data = line.split('\t')
@@ -21,12 +20,11 @@ with open(filename, 'r') as f:
 	# the last line of the file will not have two entires, so except it
 	except IndexError:
 	    pass
-	 
-    my_dict['size'] = size[1:]
-    my_dict['Mflops'] = Mflops
-    my_dict['percentage'] = percentage
+    
+    my_dict = {description:{'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}}
 
-plt.plot(my_dict['size'], my_dict['Mflops'])
+plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'])
 plt.ylabel('Mflop/s')
 plt.xlabel('Size')
+plt.legend(description)
 plt.savefig(description + '.png')
