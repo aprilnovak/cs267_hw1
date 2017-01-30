@@ -36,7 +36,8 @@ for index, filename in enumerate(filenames):
 print(my_dict)
 
 for description in descriptions:
-    plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'])
+    plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'], label=description)
     plt.ylabel('Mflop/s')
     plt.xlabel('Size')
+plt.legend()
 plt.savefig(description + '.png')
