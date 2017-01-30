@@ -6,11 +6,13 @@ from matplotlib import pyplot as plt
 filename = sys.argv[1]
 description = sys.argv[2]
 
+my_dict = dict()
 with open(filename, 'r') as f:
     size = []
     Mflops = []
     percentage = []
-
+    
+    my_dict[description] = {}
     for line in f:
 	data = line.split('\t')
 	try:
@@ -20,9 +22,9 @@ with open(filename, 'r') as f:
 	# the last line of the file will not have two entires, so except it
 	except IndexError:
 	    pass
-    
-    my_dict = {description:{'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}}
-
+    my_dict[description] = {'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}
+    #my_dict = {description:{'size':size[1:], 'Mflops':Mflops, 'percentage':percentage}}
+print(my_dict)
 plt.plot(my_dict[description]['size'], my_dict[description]['Mflops'])
 plt.ylabel('Mflop/s')
 plt.xlabel('Size')
